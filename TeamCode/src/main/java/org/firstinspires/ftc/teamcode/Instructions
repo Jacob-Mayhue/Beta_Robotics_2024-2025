@@ -1,0 +1,56 @@
+On Wednesday we covered a lot of material regarding programming a robot for FTC.  At first it might
+seem very difficult and complicated, but I promise after coding a robot from scratch it will be a
+very exciting and fun experience!
+
+This project is labeled Beta_Robotics_2024-2025 because it is
+where I will be doing programming for Beta alongside helping you as well.  As I'm sure you have
+noticed, each new programmer has their own 'branch'.  The concept of git, branches, commits, etc
+may be confusing at first, but it will all make sense with time.  What's important is that you know
+how to manage your branch specifically.  The features you will be utilizing in git are commiting,
+pushing, and pulling code.  Basically when you write code in this project it, at first, will only
+exist on your computer.  To use collaborative programming, which I HIGHLY recommend, you need to put
+your code online in a git repository.  I have already made the repository for this project for you
+which can be found at "https://github.com/Jacob-Mayhue/Beta_Robotics_2024-2025.git".  To put your
+code online you need to use the 'commit' command and the 'push' command.
+
+To use these commands click the icon that looks like a horizontal line with a circle in the middle
+that can be found under the file tab near the top left of your screen, or use the Alt+0 shortcut. If
+you haven't changed anything yet then this tab will mostly be blank, but after you edit the project
+in some way it should change.  You should see a couple check boxes inside of a 'Changes' dropdown and
+a terminal that says "Commit Message" when empty.  The first thing you want to do is check the checkbox
+attached to 'changes' this will select all the altered code to be commited to github.  After that
+write a SHORT message in the terminal that describes what you did with these changes.  This message
+should be reasonable and relevant to your changes, please do not write any silly or dumb commit
+messages as this is practice for the real thing.  This message should also be understandable to
+someone other than yourself.  After typing the message click "Commit and Push..." at the bottom of
+the terminal.  In the bottom right you will most likely get a message about warnings/errors in your
+code, don't worry this is completely normal and will almost always occur.  Just tell it to commit
+and push anyways.  After this click the push button at the bottom of the pop-up window.  After that
+you should be done!  Congrats on your first commit!  Please note you should only be altering code on
+YOUR branch unless you have permission from the branches owner, please do not mess with anyone
+else's code without permission, and UNDER NO CIRCUMSTANCES should you ever alter anything on
+Jacob's-Branch.  This code will be used for the actual Beta robot and I do not want it to be altered.
+If you do alter my code I have no problem deleting your branch and removing you from this repository.
+
+The other git command you may use is the 'pull' command.  This takes the online version of the project
+and puts it on your computer.  You can really just think of it as updating you project.  To use this
+command simply press Control+T and click okay (Pull is a lot easier than commits :) ).
+
+Now that you understand the basics of using GitHub you're ready to start programming.  Throughout
+the lessons/tasks I've set up for you you'll see your instructions in a green text with a TODO
+tag.  Follow these instructions and hints I leave and move on to the next stage after I've checked
+you off.  After you do any coding you should always commit and push your code so that if I'm not
+around I can still access your code from the online repository.  After reviewing your code I'll give
+feedback and suggestions (Duncan can also check/review your code as well).  I may periodically check
+your progress on my own and leave behind comments with the FIXME
+tag.  This doesn't necessarily mean something is wrong with your code rather it's another perspective
+to consider.
+
+Finally, if you have any questions on ANYTHING coding related ask Duncan or I.  Additionally if you
+really can't figure something out and neither of us are around feel free to check my branch and see
+how I personally do things.  Remember to not change any code, just look please.  Don't forget that
+you will need to pull my changes to see my current code status (I will try my best to commit and push
+after each day).  Start with the below tagged instructions to begin.
+
+
+TODO: To start your training head over to the RobotCore class and read the instructions from there.
