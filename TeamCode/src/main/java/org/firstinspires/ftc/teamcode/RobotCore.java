@@ -26,8 +26,5 @@ TODO: complete the RobotCore class in these steps
     6. (Optional) If you want to challenge your Java knowledge create a list that stores all your motors and set their
        ZeroPowerBehaviors and Modes using a single for loop
 */
-public class RobotCore {
-
-
-
+public class RobotCore{
 }
