@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name = "Debug Tele", group = "A")
 public class DebugTeleOp extends RobotCore{
+
+    double zeroPower =0.03;
     @Override
     public void init() {
         super.init();
@@ -39,15 +41,20 @@ public class DebugTeleOp extends RobotCore{
         else
             backRight.setPower(0);
 
-        if(gamepad1.dpad_up)
+        if(gamepad1.dpad_up && verticalSlide.getCurrentPosition() < 2850)
             verticalSlide.setPower(1);
-        else if (gamepad1.dpad_down)
+        else if (gamepad1.dpad_down  && verticalSlide.getCurrentPosition() > 0)
             verticalSlide.setPower(-1);
         else
             verticalSlide.setPower(0);
 
         if(gamepad1.dpad_left)
             ResetAllDriveEncoders();
+
+        if(gamepad1.right_trigger > 0.5)
+            zeroPower+= 0.01;
+        else if (gamepad1.left_trigger > 0.5)
+            zeroPower -= 0.001;
 
 
         if(gamepad2.left_bumper){
@@ -60,10 +67,10 @@ public class DebugTeleOp extends RobotCore{
 
         if(gamepad2.left_trigger > 0.5){
             leftWheel.setPower(1);
-            rightWheel.setPower(1);
+            rightWheel.setPower(-1);
         } else if(gamepad2.right_trigger > 0.5){
             leftWheel.setPower(-1);
-            rightWheel.setPower(-1);
+            rightWheel.setPower(1);
         }
 
         if(gamepad2.dpad_down)
@@ -82,6 +89,7 @@ public class DebugTeleOp extends RobotCore{
         telemetry.addData("Back Left Pos: ", backLeft.getCurrentPosition());
         telemetry.addData("Back Right Pos: ", backRight.getCurrentPosition());
         telemetry.addData("\nverticalSlide Pos: ", verticalSlide.getCurrentPosition());
+        telemetry.addData ("Vertical Slide zero power: ", zeroPower);
 
         telemetry.update();
 
