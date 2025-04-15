@@ -49,6 +49,8 @@ public class RobotCore extends OpMode{
         backRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         rightSlide.setDirection(Servo.Direction.REVERSE);
+
+        rightWheel.setDirection(CRServo.Direction.REVERSE);
     }
 
     @Override

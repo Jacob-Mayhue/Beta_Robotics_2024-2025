@@ -1,14 +1,19 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 @TeleOp(name = "Debug Tele", group = "A")
 public class DebugTeleOp extends RobotCore{
 
-    double zeroPower =0.03;
+    double zeroPower = 0.03;
     @Override
     public void init() {
         super.init();
+        verticalSlide.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        verticalSlide.setTargetPosition(0);
+        verticalSlide.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        verticalSlide.setPower(1);
     }
 
     @Override
@@ -41,20 +46,27 @@ public class DebugTeleOp extends RobotCore{
         else
             backRight.setPower(0);
 
-        if(gamepad1.dpad_up && verticalSlide.getCurrentPosition() < 2850)
-            verticalSlide.setPower(1);
-        else if (gamepad1.dpad_down  && verticalSlide.getCurrentPosition() > 0)
-            verticalSlide.setPower(-1);
-        else
-            verticalSlide.setPower(0);
+//        if(gamepad1.dpad_up && verticalSlide.getCurrentPosition() < 2850)
+//            verticalSlide.setPower(1);
+//        else if (gamepad1.dpad_down  && verticalSlide.getCurrentPosition() > 0)
+//            verticalSlide.setPower(-1);
+//        else
+//            verticalSlide.setPower(0);
+
+        if(gamepad1.dpad_up){
+            verticalSlide.setTargetPosition(verticalSlide.getCurrentPosition() + 10);
+        }
+        if(gamepad1.dpad_down){
+            verticalSlide.setTargetPosition(verticalSlide.getCurrentPosition() - 10);
+        }
 
         if(gamepad1.dpad_left)
             ResetAllDriveEncoders();
 
-        if(gamepad1.right_trigger > 0.5)
-            zeroPower+= 0.01;
-        else if (gamepad1.left_trigger > 0.5)
-            zeroPower -= 0.001;
+//        if(gamepad1.right_trigger > 0.5)
+//            zeroPower+= 0.01;
+//        else if (gamepad1.left_trigger > 0.5)
+//            zeroPower -= 0.001;
 
 
         if(gamepad2.left_bumper){
@@ -67,10 +79,10 @@ public class DebugTeleOp extends RobotCore{
 
         if(gamepad2.left_trigger > 0.5){
             leftWheel.setPower(1);
-            rightWheel.setPower(-1);
+            rightWheel.setPower(1);
         } else if(gamepad2.right_trigger > 0.5){
             leftWheel.setPower(-1);
-            rightWheel.setPower(1);
+            rightWheel.setPower(-1);
         }
 
         if(gamepad2.dpad_down)
