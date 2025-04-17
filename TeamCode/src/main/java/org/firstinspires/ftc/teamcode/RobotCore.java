@@ -26,5 +26,45 @@ TODO: complete the RobotCore class in these steps
     6. (Optional) If you want to challenge your Java knowledge create a list that stores all your motors and set their
        ZeroPowerBehaviors and Modes using a single for loop
 */
-public class RobotCore{
+public class RobotCore extends OpMode{
+    DcMotor frontLeft ;
+    DcMotor frontRight ;
+    DcMotor backLeft;
+    DcMotor backRight;
+    DcMotor leftSlide;
+    DcMotor rightSlide;
+    Servo clawPivot;
+    CRServo leftWheel;
+    CRServo rightWheel;
+
+    List<DcMotor> motors;
+
+    @Override
+    public void init() {
+
+        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
+        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
+        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
+        backRight = hardwareMap.get(DcMotor.class, "backRight");
+
+        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
+        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
+        motors = Arrays.asList(frontLeft, frontRight, backLeft, backRight, leftSlide, rightSlide);
+
+        clawPivot = hardwareMap.get(Servo.class, "clawPivot");
+        leftWheel = hardwareMap.get(CRServo.class, "leftWheel");
+        rightWheel = hardwareMap.get(CRServo.class, "rightWheel");
+
+        for(DcMotor motor: motors){
+            motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+
+
+
+    }
+
+    @Override
+    public void loop() {
+
+    }
 }
