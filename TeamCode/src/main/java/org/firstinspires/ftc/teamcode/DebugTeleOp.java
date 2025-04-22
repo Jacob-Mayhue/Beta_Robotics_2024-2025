@@ -90,10 +90,11 @@ public class DebugTeleOp extends RobotCore{
         else if(gamepad2.dpad_up)
             bucketPivot.setPosition(1);
 
+
         if(gamepad2.y)
-            clawPivot.setPosition(1);
+            clawPivot.setPosition(clawPivot.getPosition() + 0.0025);
         else if(gamepad2.a)
-            clawPivot.setPosition(0);
+            clawPivot.setPosition(clawPivot.getPosition() - 0.0025);
 
 
         telemetry.addData("Front Left Pos: ", frontLeft.getCurrentPosition());
@@ -102,6 +103,7 @@ public class DebugTeleOp extends RobotCore{
         telemetry.addData("Back Right Pos: ", backRight.getCurrentPosition());
         telemetry.addData("\nverticalSlide Pos: ", verticalSlide.getCurrentPosition());
         telemetry.addData ("Vertical Slide zero power: ", zeroPower);
+        telemetry.addData("clawPivot", clawPivot.getPosition());
 
         telemetry.update();
 
