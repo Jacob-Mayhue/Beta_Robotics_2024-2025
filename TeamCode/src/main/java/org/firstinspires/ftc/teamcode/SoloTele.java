@@ -16,6 +16,21 @@ public class SoloTele extends RobotCore {
     ElapsedTime intakeTime = new ElapsedTime();
     ElapsedTime outtakeTime = new ElapsedTime();
 
+    double max;
+
+    // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
+    double axial=0;  // Note: pushing stick forward gives negative value
+    double lateral=0;
+    double yaw=0;
+
+    // Combine the joystick requests for each axis-motion to determine each wheel's power.
+    // Set up a variable for each drive wheel to save the power level for telemetry.
+    double leftFrontPower;
+    double rightFrontPower;
+    double leftBackPower;
+    double rightBackPower;
+
+
     @Override
     public void init() {
         super.init();
@@ -33,7 +48,47 @@ public class SoloTele extends RobotCore {
     @Override
     public void loop() {
         printDebugData();
-        drivetrain();
+
+        axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+        lateral =  gamepad1.left_stick_x;
+        yaw     =  gamepad1.right_stick_x;
+
+        leftFrontPower  = axial + lateral + yaw;
+        rightFrontPower = axial - lateral - yaw;
+        leftBackPower   = axial - lateral + yaw;
+        rightBackPower  = axial + lateral - yaw;
+
+
+        // Normalize the values so no wheel power exceeds 100%
+        // This ensures that the robot maintains the desired motion.
+        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+        max = Math.max(max, Math.abs(leftBackPower));
+        max = Math.max(max, Math.abs(rightBackPower));
+
+        if (max > 1.0) {
+            leftFrontPower  /= max;
+            rightFrontPower /= max;
+            leftBackPower   /= max;
+            rightBackPower  /= max;
+        }
+
+        //Drivetrain Driver Controls
+        if (gamepad1.left_stick_button && (Math.abs(gamepad1.left_stick_x) > 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1 || Math.abs(gamepad1.right_stick_x) > 0.1)) {
+            frontLeft.setPower(leftFrontPower * 0.5);
+            frontRight.setPower(rightFrontPower * 0.5);
+            backLeft.setPower(leftBackPower * 0.5);
+            backRight.setPower(rightBackPower * 0.5);
+        } else if(Math.abs(gamepad1.left_stick_x) > 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1 || Math.abs(gamepad1.right_stick_x) > 0.1){
+            frontLeft.setPower(leftFrontPower);
+            frontRight.setPower(rightFrontPower);
+            backLeft.setPower(leftBackPower);
+            backRight.setPower(rightBackPower);
+        }else{
+            frontLeft.setPower(0);
+            frontRight.setPower(0);
+            backLeft.setPower(0);
+            backRight.setPower(0);
+        }
 
         if(gamepad1.y && transfer != transferSteps.REST){
             transfer = transferSteps.REST;
@@ -153,49 +208,60 @@ public class SoloTele extends RobotCore {
         telemetry.addData("\nverticalSlide Pos: ", verticalSlide.getCurrentPosition());
         telemetry.addData ("SlideTarget: ", slideTarget);
 
+
         telemetry.update();
     }
-    private void drivetrain() {
-        double moveX;
-        double moveY;
-        double turnX;
-        double frontLeftPower;
-        double frontRightPower;
-        double backLeftPower;
-        double backRightPower;
-        //Drivetrain
-        moveX = gamepad1.left_stick_x;
-        moveY = -gamepad1.left_stick_y;
-        turnX = gamepad1.right_stick_x;
-
-        frontLeftPower = moveY + moveX + turnX;
-        frontRightPower = moveY - moveX - turnX;
-        backLeftPower = moveY - moveX + turnX;
-        backRightPower = moveY + moveX - turnX;
-
-        //Drivetrain Driver Controls
-        if (Math.abs(gamepad1.left_stick_x) > 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1 || Math.abs(gamepad1.right_stick_x) > 0.1) {
-            if (gamepad1.right_stick_button) {
-                frontLeft.setPower(frontLeftPower * 0.8);
-                frontRight.setPower(frontRightPower * 0.8);
-                backLeft.setPower(backLeftPower * 0.8);
-                backRight.setPower(backRightPower * 0.8);
-            } else if (gamepad1.left_stick_button) {
-                frontLeft.setPower(frontLeftPower * 0.25);
-                frontRight.setPower(frontRightPower * 0.25);
-                backLeft.setPower(backLeftPower * 0.25);
-                backRight.setPower(backRightPower * 0.25);
-            } else {
-                frontLeft.setPower(frontLeftPower * 0.55);
-                frontRight.setPower(frontRightPower * 0.55);
-                backLeft.setPower(backLeftPower * 0.55);
-                backRight.setPower(backRightPower * 0.55);
-            }
-        } else {
-            frontLeft.setPower(0);
-            frontRight.setPower(0);
-            backLeft.setPower(0);
-            backRight.setPower(0);
-        }
-    }
+//    private void drivetrain() {
+//        double max;
+//
+//        // POV Mode uses left joystick to go forward & strafe, and right joystick to rotate.
+//        double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
+//        double lateral =  gamepad1.left_stick_x;
+//        double yaw     =  gamepad1.right_stick_x;
+//
+//        // Combine the joystick requests for each axis-motion to determine each wheel's power.
+//        // Set up a variable for each drive wheel to save the power level for telemetry.
+//        double leftFrontPower  = axial + lateral + yaw;
+//        double rightFrontPower = axial - lateral - yaw;
+//        double leftBackPower   = axial - lateral + yaw;
+//        double rightBackPower  = axial + lateral - yaw;
+//
+//        // Normalize the values so no wheel power exceeds 100%
+//        // This ensures that the robot maintains the desired motion.
+//        max = Math.max(Math.abs(leftFrontPower), Math.abs(rightFrontPower));
+//        max = Math.max(max, Math.abs(leftBackPower));
+//        max = Math.max(max, Math.abs(rightBackPower));
+//
+//        if (max > 1.0) {
+//            leftFrontPower  /= max;
+//            rightFrontPower /= max;
+//            leftBackPower   /= max;
+//            rightBackPower  /= max;
+//        }
+//
+//        //Drivetrain Driver Controls
+//        if (Math.abs(gamepad1.left_stick_x) > 0.1 || Math.abs(gamepad1.left_stick_y) > 0.1 || Math.abs(gamepad1.right_stick_x) > 0.1) {
+//            if (gamepad1.right_stick_button) {
+//                frontLeft.setPower(leftFrontPower * 0.8);
+//                frontRight.setPower(rightFrontPower * 0.8);
+//                backLeft.setPower(leftBackPower * 0.8);
+//                backRight.setPower(rightBackPower * 0.8);
+//            } else if (gamepad1.left_stick_button) {
+//                frontLeft.setPower(leftFrontPower * 0.25);
+//                frontRight.setPower(rightFrontPower * 0.25);
+//                backLeft.setPower(leftBackPower * 0.25);
+//                backRight.setPower(rightBackPower * 0.25);
+//            } else {
+//                frontLeft.setPower(leftFrontPower * 0.55);
+//                frontRight.setPower(rightFrontPower * 0.55);
+//                backLeft.setPower(leftBackPower * 0.55);
+//                backRight.setPower(rightBackPower * 0.55);
+//            }
+//        } else {
+//            frontLeft.setPower(0);
+//            frontRight.setPower(0);
+//            backLeft.setPower(0);
+//            backRight.setPower(0);
+//        }
+//    }
 }

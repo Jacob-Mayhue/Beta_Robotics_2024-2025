@@ -41,7 +41,6 @@ public class RobotCore extends OpMode{
 
         for(DcMotor motor: motors){
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
 
         frontLeft.setDirection(DcMotorSimple.Direction.REVERSE);
