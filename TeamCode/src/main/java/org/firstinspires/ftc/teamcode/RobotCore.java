@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.Arrays;
@@ -33,6 +34,8 @@ public class RobotCore extends OpMode{
     DcMotor backRight;
     DcMotor leftSlide;
     DcMotor rightSlide;
+
+    Servo horizontal;
     Servo clawPivot;
     CRServo leftWheel;
     CRServo rightWheel;
@@ -42,22 +45,28 @@ public class RobotCore extends OpMode{
     @Override
     public void init() {
 
-        frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
-        frontRight = hardwareMap.get(DcMotor.class, "frontRight");
-        backLeft = hardwareMap.get(DcMotor.class, "backLeft");
-        backRight = hardwareMap.get(DcMotor.class, "backRight");
+        frontLeft = hardwareMap.get(DcMotor.class, "leftFront");
+        frontRight = hardwareMap.get(DcMotor.class, "rightFront");
+        backLeft = hardwareMap.get(DcMotor.class, "rightRear");
+        backRight = hardwareMap.get(DcMotor.class, "leftRear");
 
-        rightSlide = hardwareMap.get(DcMotor.class, "rightSlide");
-        leftSlide = hardwareMap.get(DcMotor.class, "leftSlide");
+        rightSlide = hardwareMap.get(DcMotor.class, "slideRight");
+        leftSlide = hardwareMap.get(DcMotor.class, "slideLeft");
         motors = Arrays.asList(frontLeft, frontRight, backLeft, backRight, leftSlide, rightSlide);
 
-        clawPivot = hardwareMap.get(Servo.class, "clawPivot");
-        leftWheel = hardwareMap.get(CRServo.class, "leftWheel");
-        rightWheel = hardwareMap.get(CRServo.class, "rightWheel");
+        clawPivot = hardwareMap.get(Servo.class, "pivot");
+        leftWheel = hardwareMap.get(CRServo.class, "leftClaw");
+        rightWheel = hardwareMap.get(CRServo.class, "rightClaw");
+        horizontal = hardwareMap.get(Servo.class, "horizontal");
 
         for(DcMotor motor: motors){
             motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
+
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftSlide.setDirection(DcMotorSimple.Direction.REVERSE);
 
 
 
