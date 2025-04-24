@@ -70,8 +70,8 @@ public class DebugTeleOp extends RobotCore{
 
 
         if(gamepad2.left_bumper){
-            leftSlide.setPosition(0.6);
-            rightSlide.setPosition(0.6);
+            leftSlide.setPosition(0.5);
+            rightSlide.setPosition(0.5);
         } else if(gamepad2.right_bumper){
             leftSlide.setPosition(1);
             rightSlide.setPosition(1);
@@ -91,9 +91,10 @@ public class DebugTeleOp extends RobotCore{
             bucketPivot.setPosition(1);
 
 
-        if(gamepad2.y)
-            clawPivot.setPosition(clawPivot.getPosition() + 0.0025);
-        else if(gamepad2.a)
+        if(gamepad2.y) {
+            leftSlide.setPosition(leftSlide.getPosition() - 0.05);
+            rightSlide.setPosition(rightSlide.getPosition() - 0.05);
+        }else if(gamepad2.a)
             clawPivot.setPosition(clawPivot.getPosition() - 0.0025);
 
 

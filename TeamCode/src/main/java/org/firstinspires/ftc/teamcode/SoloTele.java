@@ -172,7 +172,7 @@ public class SoloTele extends RobotCore {
                 rightWheel.setPower(-1);
                 clawPivot.setPosition(0);
                 bucketPivot.setPosition(0);
-                slideTarget = 0.6;
+                slideTarget = 0.5;
                 leftSlide.setPosition(slideTarget);
                 rightSlide.setPosition(slideTarget);
                 if(transferTime.time(TimeUnit.SECONDS) >= 0.7){
